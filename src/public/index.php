@@ -1,17 +1,19 @@
 <?php
 
-const BASE_PATH = __DIR__ . '/../../';
+const BASE_PATH = __DIR__ . '/../../'; 
 
 require BASE_PATH . 'vendor/autoload.php';
-
 require BASE_PATH . '/functions.php';
 use FastRoute\RouteCollector;
-use FileUploadController\FileUploadController;
+use App\Http\Controllers\FileUploadController;
+
+
+
 
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     // Define your routes
-    $r->addRoute('GET', '/', [FileUploadController::class, 'index']);
-    $r->addRoute('POST', '/upload', [FileUploadController::class, 'store']);
+    $r->addRoute('GET', '/', [FileUploadController::class, 'in']);
+    $r->addRoute('GET', '/upload', [FileUploadController::class, 'index']);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];

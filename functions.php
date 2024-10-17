@@ -9,7 +9,8 @@ function dd($value)
     echo"</pre>";
 }
 
-function views($basepath)
-{
- return BASE_PATH . '/views' . $basepath;
+function views($path, $attributes = []){
+    extract($attributes);
+
+    require BASE_PATH .'views/' . $path;
 }

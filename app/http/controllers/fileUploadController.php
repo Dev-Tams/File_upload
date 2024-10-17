@@ -1,17 +1,16 @@
-<?php 
-namespace FileUploadController;
-use functions;
+<?php
+namespace App\Http\Controllers;
 
-use function functions\dd;
 use function functions\views;
+use function functions\dd;
 
 class FileUploadController
 {
     public function index()
     {
-
-        dd(123);
-        return views("fileupload.htm");
+   //     dd($_SERVER);
+       return views("file_upload.php");
+       
     } 
  
     public function store()
