@@ -14,3 +14,8 @@ function views($path, $attributes = []){
 
     require BASE_PATH .'views/' . $path;
 }
+
+function validated()
+{
+    
+}

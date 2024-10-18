@@ -11,9 +11,8 @@ use App\Http\Controllers\FileUploadController;
 
 
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
-    // Define your routes
-    $r->addRoute('GET', '/', [FileUploadController::class, 'in']);
     $r->addRoute('GET', '/upload', [FileUploadController::class, 'index']);
+    $r->addRoute('POST', '/upload', [FileUploadController::class, 'store']);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
