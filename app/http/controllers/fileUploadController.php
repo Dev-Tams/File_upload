@@ -3,17 +3,10 @@
 namespace App\Http\Controllers;
 
 use function functions\views;
-use function functions\dd;
-use function functions\validated;
-
-use App\Http\Requests\FileUploadRequests\FileUploadRequests;
-use App\http\Validator\Validator;
-
 class FileUploadController
 {
     public function index()
     {
-        //     dd($_SERVER);
         return views("file_upload.php");
     }
 
