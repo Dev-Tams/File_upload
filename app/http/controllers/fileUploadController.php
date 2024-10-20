@@ -46,6 +46,15 @@ class FileUploadController
                         $uploadOk = 0;
                     }
 
+                    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'mp3', 'mp4', 'txt', ''];
+                    if(! in_array($fileExtension, $allowedExtensions)){
+                        $uploadOk = 0;
+                        echo "invalid file";
+                    }
+        
+
                     $destPath = $uploadFileDir . $fileName;
                     if ($uploadOk === 1) {
                         if (move_uploaded_file($fileTmpPath, $destPath)) {
