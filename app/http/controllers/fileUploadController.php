@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Database;
+
 use function functions\views;
 class FileUploadController
 {
@@ -29,9 +31,9 @@ class FileUploadController
             foreach ($fileFields as $files) {
                 if (isset($_FILES[$files])) {
                     $fileTmpPath = $_FILES[$files]['tmp_name'];
-
                     $fileSize = $_FILES[$files]['size'];
                     $fileName = $_FILES[$files]['name'];
+                    $fileType = $_FILES[$files]['type'];
                     $destPath = $uploadFileDir . $fileName;
 
                     if ($fileSize > 50000) {
@@ -43,12 +45,15 @@ class FileUploadController
                         echo "Sorry, file already exists.";
                         $uploadOk = 0;
                     }
+
                     $destPath = $uploadFileDir . $fileName;
                     if ($uploadOk === 1) {
                         if (move_uploaded_file($fileTmpPath, $destPath)) {
                             echo "File {$fileName} uploaded successfully!<br>";
-                        }
-                         else if($_FILES[$files]["error"] > 0)  {
+
+                            // Call saveUpload to save file info to the database
+                            $this->saveUpload($fileName, $destPath, $fileType, $fileSize);
+                        } else if ($_FILES[$files]["error"] > 0) {
                             echo "No file uploaded for {$files}.<br>";
                         }
                     }
@@ -58,5 +63,28 @@ class FileUploadController
                 }
             }
         }
+    }
+
+    public function saveUpload($fileName, $filePath, $fileType, $fileSize)
+    {
+        
+        $config = require BASE_PATH .'config/database.php';
+        $dbConfig = $config['Database'];
+        
+           $db = new Database($dbConfig);    
+
+            try {
+                $db->query('INSERT into uploads (file_name, file_path, file_type, file_size) VALUES (:file_name, :file_path, :file_type, :file_size)', [
+                    'file_name' => $fileName,
+                    'file_path' => $filePath,
+                    "file_type" => $fileType,
+                    "file_size" => $fileSize,
+                   ]);
+                   echo "File details stored in the database.<br>";
+            } catch (\PDOException $e) {
+                echo "Failed to save file in database " . $e->getMessage();
+            }
+          
+
     }
 }
