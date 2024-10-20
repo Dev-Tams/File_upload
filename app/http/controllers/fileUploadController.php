@@ -15,9 +15,12 @@ class FileUploadController
     public function store()
     {
 
-        $uploadFileDir = './uploads/';
-        if (!is_dir($uploadFileDir)) {
-            mkdir($uploadFileDir, 0777, true);
+        $uploadFileDir = __DIR__ . '/../uploads/';
+        $randomDir = bin2hex(random_bytes(16));
+        $uploadPath = $uploadFileDir . $randomDir . '/';
+        
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
         }
         $uploadOk = 1;
 
@@ -34,7 +37,7 @@ class FileUploadController
                     $fileSize = $_FILES[$files]['size'];
                     $fileName = $_FILES[$files]['name'];
                     $fileType = $_FILES[$files]['type'];
-                    $destPath = $uploadFileDir . $fileName;
+                    $destPath = $uploadPath . $fileName;
 
                     if ($fileSize > 50000) {
                         echo "Sorry, your file {$fileName} is too large.<br>";
@@ -55,7 +58,7 @@ class FileUploadController
                     }
         
 
-                    $destPath = $uploadFileDir . $fileName;
+                    $destPath = $uploadPath . $fileName;
                     if ($uploadOk === 1) {
                         if (move_uploaded_file($fileTmpPath, $destPath)) {
                             echo "File {$fileName} uploaded successfully!<br>";
