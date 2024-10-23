@@ -61,10 +61,9 @@ class FileUploadController
                     $destPath = $uploadPath . $fileName;
                     if ($uploadOk === 1) {
                         if (move_uploaded_file($fileTmpPath, $destPath)) {
+                            $this->saveUpload($fileName, $destPath, $fileType, $fileSize);
                             echo "File {$fileName} uploaded successfully!<br>";
 
-                            // Call saveUpload to save file info to the database
-                            $this->saveUpload($fileName, $destPath, $fileType, $fileSize);
                         } else if ($_FILES[$files]["error"] > 0) {
                             echo "No file uploaded for {$files}.<br>";
                         }
@@ -79,12 +78,7 @@ class FileUploadController
 
     public function saveUpload($fileName, $filePath, $fileType, $fileSize)
     {
-        
-        $config = require BASE_PATH .'config/database.php';
-        $dbConfig = $config['Database'];
-        
-           $db = new Database($dbConfig);    
-
+        global $db;
             try {
                 $db->query('INSERT into uploads (file_name, file_path, file_type, file_size) VALUES (:file_name, :file_path, :file_type, :file_size)', [
                     'file_name' => $fileName,

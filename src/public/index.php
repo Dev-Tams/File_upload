@@ -4,6 +4,7 @@ const BASE_PATH = __DIR__ . '/../../';
 
 require BASE_PATH . 'vendor/autoload.php';
 require BASE_PATH . '/functions.php';
+require BASE_PATH . 'boostrap.php';
 
 
 use Dotenv\Dotenv;
@@ -13,15 +14,7 @@ use App\Http\Controllers\FileUploadController;
 use function functions\dd;
 
 
-$dotenv = Dotenv::createUnsafeImmutable(BASE_PATH);
-$dotenv->load();
 
-$config = require BASE_PATH .'config/database.php';
-dd($config);
-$dbConfig = $config['Database'];
-dd($dbConfig);
-$db = new Database($dbConfig);
-dd($db);
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
