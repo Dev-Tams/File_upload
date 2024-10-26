@@ -34,7 +34,7 @@
             </div>
 
             <div class="text-center">
-                <input type="submit" value="Upload File" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 cursor-pointer">
+                <input type="submit" value="Upload File" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 cursor-pointer">
             </div>
         </form>
     </div>
