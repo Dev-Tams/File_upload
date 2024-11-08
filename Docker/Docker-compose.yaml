@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.27.2-alpine
+    container_name: upload
+    restart: always
+    ports:
+      - 8000:80
+    volumes:
+      - ../app:/var/www/html
+      - ./nginx:/etc/nginx.conf.d
+    depends_on:
+      - db
+    environment:
+      PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+  db:
+    image: mysql:latest
+    container_name: upload_data
+    volumes:
+      - ./storage/upload_data:/var/lib/mysql
+    restart: no
+    environment:
+      MYSQL_INITDB_SKIP_TZINFO: "yes"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
