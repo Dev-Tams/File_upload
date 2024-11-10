@@ -3,3 +3,4 @@
 /.env
 /src/public/uploads
 app/http/uploads/
+/docker/storage
